@@ -1,2 +1,0 @@
-root gamerule
-UserSupport usersupport
