@@ -1,0 +1,29 @@
+const mens = [ ];
+const chat = document.getElementById("chat");
+
+class Men{
+
+    constructor( ){
+
+        this.text = undefined;
+        this.owner = undefined;
+
+        return this;
+    }
+
+    setText( text ){
+
+        this.text = text;
+
+    }
+
+    show( ){
+
+        let owner = "";
+        if ( this.owner ) owner = "owner";
+
+        chat.innerHTML += " <div class='message " + owner + " ' name=' " + mens.length + " '> " + this.text + " </div>"
+
+    }
+
+}
