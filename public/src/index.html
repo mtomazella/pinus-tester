@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>ChatTest</title>
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/500b73534a.js" crossorigin="anonymous"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    </head>
+
+    <body class="container col-12 m-0 p-0">
+
+        <div class="conxIcon">
+            <i class="fa fa-user-circle conxIcon" onclick="conxUI()" aria-hidden="true"> </i>
+            <label class="conxIcon"> Conexão </label>
+        </div>
+        <div class=" conx " id="conx">
+
+            <input type="text" class="cod" value="1" placeholder="Código user">
+            <input type="text" class="cod" value="1" placeholder="Código suporte">
+            <select name="chatType" class="cod" id="chatType">
+
+                <option value="user" selected>User</option>
+                <option value="admin">Admin</option>
+
+            </select>
+
+        </div>
+
+        <div class="bordinha" id="maxChat">
+            <div class="botoes">
+
+                <i class="fa fa-window-minimize icon" aria-hidden="true" onclick=" hide() "></i>
+                <i class="fas fa-window-maximize icon"></i>
+                <i class="fa fa-times icon" aria-hidden="true"></i>
+
+            </div>
+            <div class="col-12 chat" id="chat"></div> 
+            <div class="col-12 write">
+
+                <form class="write row" autocomplete="off">
+
+                    <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                    <input type="text" class="write badge-pill px-3" autocapitalize="on" autocomplete="off" name="inout" id="input">
+                    <button type="button" class="send rounded rounded-circle" name="send" onclick="post()"> <i class="fa fa-location-arrow icon send" aria-hidden="true"></i> </button>
+
+                </form>
+
+            </div>
+        </div>
+
+        <div class="minChat" id="minChat" onclick=" show() ">
+            <i class="fa fa-location-arrow minIcon" aria-hidden="true"></i> 
+            <label class="minChat"> Chat </label> 
+            <i class="fa fa-times minChat minCloseIcon" aria-hidden="true" onclick=" close( 'chat' ) "></i>   
+        </div>
+
+
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <!-- Popper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <!-- Bootstrap Js -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+
+        <!-- ChatScript -->
+        <script src="../scripts/Mens.js">      </script>
+        <script src="../scripts/post.js">      </script>
+        <script src="../scripts/UI.js">        </script>
+
+    </body
+>
+</html>
