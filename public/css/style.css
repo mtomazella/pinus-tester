@@ -142,6 +142,7 @@ button.minChat{
 
 }
 
+
 div.conx{
 
     display: flex;
@@ -155,6 +156,7 @@ div.conx{
     top: 0;
     border-bottom-right-radius: 0.5rem;
     color: white;
+    z-index: 4;
 
 }
 div.conxIcon{
@@ -164,7 +166,7 @@ div.conxIcon{
     margin-left: 1rem;
     color: white;
     font-size: 2rem;
-    z-index: 3;
+    z-index: 5;
 
 }
 label.conxIcon{

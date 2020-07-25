@@ -1,6 +1,15 @@
 const express = require( "express" );
 const app = express();
+const { Sequelize, Model, DataTypes } = require( "sequelize" );
+const bp = require( "body-parser" );
+const Database = require( "./nodeDB" );
 const config = require( './config.json' );
+const { formatter, insertMessage } = require("./nodeDB");
+
+
+
+
+/* Criando Web Server */
 
 app.listen( config.serverPort );
 
@@ -14,18 +23,39 @@ function sendPage( path, file, type ){
 
 }
 
+
+
+
+/* Definindo páginas */
 sendPage( "/", config.defaultPage );
 sendPage( "/teste", config.testPage );
+app.use( express.static( 'public' ) ); //Libera a pasta public para ser disponibilizada para o usuário.
 
-app.use( express.static( 'public' ) );
 
 
-const mysql = require( "mysql" );
-const connection = mysql.createConnection( config.sqlConfig );
 
-connection.connect( function(error){
+/* Ouvindo post requests */
 
-    if (error) throw error;
-    else console.log("Conectado lindamente ao banco: " /*+ connection.threadId*/);
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true}));
+
+app.post( "/chatPost", function( request, response ){
+
+    /* Recebendo mensagem */
+
+    const message = request.body;
+
+    // Respondendo 
+
+    const datetime = new Date().toLocaleDateString( "en-US", config.dateOpt );
+    response.json( { Feeback: "got it, bb", Message_received: message, date: datetime } );
+    message.datetime = datetime;
+
+    console.log( message );
+
+    // Colocando no Banco de Dados
+
+    Database.insertMessage( message );
+
 
 } );

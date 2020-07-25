@@ -22,12 +22,12 @@
 
         <div class="conxIcon">
             <i class="fa fa-user-circle conxIcon" onclick="conxUI()" aria-hidden="true"> </i>
-            <label class="conxIcon"> Conexão </label>
+            <label class="conxIcon" id="conxIconLabel"> Conexão </label>
         </div>
         <div class=" conx " id="conx">
 
-            <input type="text" class="cod" value="1" placeholder="Código user">
-            <input type="text" class="cod" value="1" placeholder="Código suporte">
+            <input type="text" id="userCode" class="cod" value="1" placeholder="Código user">
+            <input type="text" id="adminCode" class="cod" value="1" placeholder="Código suporte">
             <select name="chatType" class="cod" id="chatType">
 
                 <option value="user" selected>User</option>
@@ -74,9 +74,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
         <!-- ChatScript -->
-        <script src="../scripts/Mens.js">      </script>
-        <script src="../scripts/post.js">      </script>
-        <script src="../scripts/UI.js">        </script>
+        <script src="../frontend-scripts/Mens.js">      </script>
+        <script src="../frontend-scripts/post.js">      </script>
+        <script src="../frontend-scripts/UI.js">        </script>
 
     </body
 >
