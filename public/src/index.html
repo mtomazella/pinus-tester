@@ -26,14 +26,12 @@
         </div>
         <div class=" conx " id="conx">
 
-            <input type="text" id="userCode" class="cod" value="1" placeholder="Código user">
-            <input type="text" id="adminCode" class="cod" value="1" placeholder="Código suporte">
+            <input type="text" id="userCode" class="cod" value="1" placeholder="Código">
             <select name="chatType" class="cod" id="chatType">
-
                 <option value="user" selected>User</option>
                 <option value="admin">Admin</option>
-
             </select>
+            <button class="conxBtn cod" onclick="connect()">Conectar</button>
 
         </div>
 
@@ -51,7 +49,7 @@
                 <form class="write row" autocomplete="off">
 
                     <input autocomplete="false" name="hidden" type="text" style="display:none;">
-                    <input type="text" class="write badge-pill px-3" autocapitalize="on" autocomplete="off" name="inout" id="input">
+                    <input type="text" class="write badge-pill px-3" autocapitalize="on" autocomplete="off" name="input" id="input">
                     <button type="button" class="send rounded rounded-circle" name="send" onclick="post()"> <i class="fa fa-location-arrow icon send" aria-hidden="true"></i> </button>
 
                 </form>
@@ -74,9 +72,11 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 
         <!-- ChatScript -->
+        <script src="../frontend-scripts/htmlComp.js">  </script>
         <script src="../frontend-scripts/Mens.js">      </script>
         <script src="../frontend-scripts/post.js">      </script>
         <script src="../frontend-scripts/UI.js">        </script>
+        <script src="../frontend-scripts/connect.js">   </script>
 
     </body
 >

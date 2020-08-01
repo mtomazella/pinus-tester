@@ -1,10 +1,15 @@
 const express = require( "express" );
 const app = express();
-const { Sequelize, Model, DataTypes } = require( "sequelize" );
 const bp = require( "body-parser" );
-const Database = require( "./nodeDB" );
 const config = require( './config.json' );
-const { formatter, insertMessage } = require("./nodeDB");
+const Database = require( "./nodeDB" );
+const sessions = {
+
+    "users": [],
+    "admins": [],
+    "actvChats": []
+
+}
 
 
 
@@ -13,7 +18,7 @@ const { formatter, insertMessage } = require("./nodeDB");
 
 app.listen( config.serverPort );
 
-function sendPage( path, file, type ){
+function sendPage( path, file ){
 
     app.get(path, function( request, response ){
 
@@ -27,9 +32,21 @@ function sendPage( path, file, type ){
 
 
 /* Definindo páginas */
+
 sendPage( "/", config.defaultPage );
 sendPage( "/teste", config.testPage );
 app.use( express.static( 'public' ) ); //Libera a pasta public para ser disponibilizada para o usuário.
+
+
+
+
+/* Abrindo conexão com BD */
+const sql = require( "mysql" );
+const conn = sql.createConnection( config.sqlConfig );
+conn.connect( function( error ){
+    if ( error ) throw error;
+    console.log( "conectado lindamente ao banco de dados: " + conn.threadId );
+} );
 
 
 
@@ -38,6 +55,8 @@ app.use( express.static( 'public' ) ); //Libera a pasta public para ser disponib
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true}));
+
+// De mensagens no chat
 
 app.post( "/chatPost", function( request, response ){
 
@@ -55,7 +74,29 @@ app.post( "/chatPost", function( request, response ){
 
     // Colocando no Banco de Dados
 
-    Database.insertMessage( message );
+    
 
+} );
+
+// De usuários logando
+
+app.post( "/userLogin", function( request, response ){
+
+    const message = request.body;
+    //console.log( message );
+
+    const user = new Database.User( conn, message.id);
+
+} );
+
+// De admins logando
+
+app.post( "/adminLogin", function( request, response ){
+
+    console.log( request.body );
+
+    // Respondendo 
+
+    response.json( { Feeback: "Logado" } );
 
 } );

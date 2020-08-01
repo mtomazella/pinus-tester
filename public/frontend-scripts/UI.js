@@ -1,7 +1,3 @@
-const minChat = document.getElementById( "minChat" );
-const maxChat = document.getElementById( "maxChat" );
-const conx = document.getElementById( "conx" );
-
 $( document ).ready( function( ){
 
     minChat.style.display = "none";

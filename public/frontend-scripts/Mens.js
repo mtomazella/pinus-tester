@@ -1,5 +1,4 @@
 const mens = [ ];
-const chat = document.getElementById("chat");
 
 class Men{
 

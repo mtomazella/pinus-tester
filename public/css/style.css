@@ -34,7 +34,7 @@ body{
 
 .chat{
 
-    height: 85%;
+    height: 82%;
     display: flex;
     flex-direction: column;
     background-color: rgb(250, 250, 250);
@@ -183,6 +183,18 @@ label.conxIcon{
     width: fit-content;
     border-radius: 0.1rem;
     margin-bottom: 0.4rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+}
+input.cod{
+
+    width: 10rem;
+    margin-right: 1rem;
+
+}
+button.conxBtn{
+
+    margin: auto;
 
 }

@@ -1,30 +1,39 @@
-const { Sequelize, Model, DataTypes } = require( "sequelize" );
-const { request } = require("express");
-let config = require("./config.json");
-config = config.sqlConfig;
+const app = require( "express" )();
+const bp = require( "body-parser" );
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true}));
 
-const DB = new Sequelize( config.database, config.user, config.password, config.host );
+function logginReply( user ){
 
-try{
-    DB.authenticate( );
-}
-catch ( error ){
-    console.error( error );
-    return error;
-}
+    app.post( "/loggedUser", function( request, response, undefined, user ){
 
+        response.json(user);
 
-const chat = DB.define( "chat" );
-
-
-function insertMessage( message ){
-
-    //const formated = [ message.admin, message.user, message.datetime, "text", message.text, null ]
-const formatted = message.admin + ", " + message.user + ", " + message.datetime + ", " + "\"text\"" + ", \"" + message.text + "\",  null";
-
-    DB.query( "insert into chat values ( " + formatted + ");" ).then( function(rows){ console.log(rows); return rows; } ).catch(function(error){console.log(error); return error;});
+    });
 
 }
 
+class User{
 
-module.exports = {DB: DB, Chat: chat, insertMessage: insertMessage};
+    constructor( connection, userId, response ){
+        connection.query( "select * from user where idUser = " + userId + ";", function( error, result, fields, response ){
+
+            if ( error ) throw error;
+            const data = result[0];
+            const user = {};
+            
+            for ( let i in data ){
+                user[i] = data[i];
+            }
+
+            //sessions.users.push( user );
+            console.log(user);
+
+            logginReply( user );
+
+        } );
+    }
+
+}
+
+module.exports = { User: User, Admin: undefined };

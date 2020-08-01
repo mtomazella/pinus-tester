@@ -8,7 +8,48 @@ $(document).ready(function() {
   });
 });
 
-const input = document.getElementById( 'input' );
+
+const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
+
+  /* Preparando mensagem */
+
+  const data = JSON.stringify( dataObj );
+  const request =  new XMLHttpRequest();
+
+  request.onerror = ( url, dataObj, callback = undefined ) => {
+
+    console.log( "reenviando mensagem: " + newMen );
+    postRequest( url, dataObj );
+
+  }
+
+  request.open( 'POST', url);
+  request.setRequestHeader( "Content-type", "application/json" );
+  request.send( data ); //Enviando mensagem
+
+  /* Recebando resposta para a mensagem */
+
+  if ( !errorFunc ){
+    request.onerror = function( ) {
+      console.log( "Erro no envio da mensagem. Reenviando..." );
+      postRequest( url, dataObj, responseFunc, errorFunc );
+    }
+  }
+  else request.onerror = errorFunc(request);
+
+
+  request.onreadystatechange = function () {
+    if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+      if ( !responseFunc ){
+        const response = JSON.parse(request.responseText);
+        console.log(response);
+      }
+      else responseFunc( request );
+    }
+  };
+
+}
+
 
 function post( ){
 
@@ -17,8 +58,9 @@ function post( ){
   const id = mens.length;
 
   newMen.owner = true;
-  newMen.user = document.getElementById("userCode").value;
-  newMen.admim = document.getElementById("adminCode").value;
+  newMen.userType = typedd.options[typedd.selectedIndex].value;
+  newMen.user = userId;
+  //newMen.admim = document.getElementById("adminCode").value;
 
   if( newMen.user == "" || newMen.admin == "" ) return 2;
 
@@ -36,43 +78,13 @@ function post( ){
 
   /* Data Transfer */
 
+  postRequest( "/chatPost", newMen, function( request ){
 
-  const postRequest = ( url, dataObj ) => {
+    const response = JSON.parse(request.responseText);
+    console.log(response);
+    newMen.datetime = response.date;
 
-    /* Preparando mensagem */
-
-    const data = JSON.stringify( dataObj );
-    const request =  new XMLHttpRequest();
-
-    request.onerror = ( url, dataObj, callback = undefined ) => {
-
-      console.log( "reenviando mensagem: " + newMen );
-      postRequest( url, dataObj );
-
-    }
-
-    request.open( 'POST', url);
-    request.setRequestHeader( "Content-type", "application/json" );
-    request.send( data ); //Enviando mensagem
-
-    /* Recebando resposta para a mensagem */
-
-    request.onerror = function( ) {
-      console.log( "Erro no envio da mensagem. Reenviando..." );
-      postRequest( url, dataObj );
-    }
-    request.onreadystatechange = function () {
-      if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-        const response = JSON.parse(request.responseText);
-        console.log(response);
-        newMen.datetime = response.date;
-        //newMen.posting = false;
-      }
-    };
-
-  }
-
-  postRequest( "/chatPost", newMen ); 
+  }, undefined ); 
 
   /* ------------- */
 
