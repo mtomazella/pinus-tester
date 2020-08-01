@@ -3,13 +3,6 @@ const app = express();
 const bp = require( "body-parser" );
 const config = require( './config.json' );
 const Database = require( "./nodeDB" );
-const sessions = {
-
-    "users": [],
-    "admins": [],
-    "actvChats": []
-
-}
 
 
 
@@ -42,6 +35,7 @@ app.use( express.static( 'public' ) ); //Libera a pasta public para ser disponib
 
 /* Abrindo conexão com BD */
 const sql = require( "mysql" );
+const { User } = require("./nodeDB");
 const conn = sql.createConnection( config.sqlConfig );
 conn.connect( function( error ){
     if ( error ) throw error;
@@ -80,12 +74,16 @@ app.post( "/chatPost", function( request, response ){
 
 // De usuários logando
 
-app.post( "/userLogin", function( request, response ){
+app.post( "/userLogin", async ( request, response ) => {
 
-    const message = request.body;
-    //console.log( message );
+    function reply( user ){
+        response.json( user );
+    }
+    function end(){
+        response.end( "Deu erro aqui, amigão" );
+    }
 
-    const user = new Database.User( conn, message.id);
+    new Database.User( conn, request.body.id ).then( reply ).catch( end );
 
 } );
 
@@ -93,10 +91,13 @@ app.post( "/userLogin", function( request, response ){
 
 app.post( "/adminLogin", function( request, response ){
 
-    console.log( request.body );
+    function reply( admin ){
+        response.json( admin );
+    }
+    function end(){
+        response.end( "Deu erro aqui, amigão" );
+    }
 
-    // Respondendo 
-
-    response.json( { Feeback: "Logado" } );
+    new Database.Admin( conn, request.body.id ).then( reply ).catch( end );
 
 } );

@@ -2,38 +2,54 @@ const app = require( "express" )();
 const bp = require( "body-parser" );
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true}));
+const sessions = {
 
-function logginReply( user ){
-
-    app.post( "/loggedUser", function( request, response, undefined, user ){
-
-        response.json(user);
-
-    });
+    "users": [],
+    "admins": [],
+    "actvChats": []
 
 }
 
 class User{
 
-    constructor( connection, userId, response ){
-        connection.query( "select * from user where idUser = " + userId + ";", function( error, result, fields, response ){
+    constructor( connection, userId ){
 
-            if ( error ) throw error;
-            const data = result[0];
-            const user = {};
-            
-            for ( let i in data ){
-                user[i] = data[i];
-            }
-
-            //sessions.users.push( user );
-            console.log(user);
-
-            logginReply( user );
-
+        return new Promise( ( resolve, reject ) => {
+            connection.query( "select * from user where idUser = " + userId + ";", function( error, Qresult ){
+                if ( error ) reject( error );
+                const data = Qresult[0];
+                const user = {};
+                
+                for ( let i in data ){
+                    user[i] = data[i];
+                }
+    
+                resolve( user );
+            } );
         } );
     }
 
 }
 
-module.exports = { User: User, Admin: undefined };
+class Admin{
+
+    constructor( connection, adminId ){
+
+        return new Promise( ( resolve, reject ) => {
+            connection.query( "select * from admin where idAdmin = " + adminId + ";", function( error, Qresult ){
+                if ( error ) reject( error );
+                const data = Qresult[0];
+                const admin = {};
+                
+                for ( let i in data ){
+                    admin[i] = data[i];
+                }
+    
+                resolve( admin );
+            } );
+        } );
+    }
+
+}
+
+module.exports = { User: User, Admin: Admin };

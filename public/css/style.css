@@ -198,3 +198,12 @@ button.conxBtn{
     margin: auto;
 
 }
+
+div.userInfo{
+
+    height: 100%;
+    width: fit-content;
+    position: relative;
+    left: -50px;
+
+}

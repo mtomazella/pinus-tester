@@ -23,9 +23,9 @@ const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
 
   }
 
-  request.open( 'POST', url);
+  request.open( 'POST', url, true);
   request.setRequestHeader( "Content-type", "application/json" );
-  request.send( data ); //Enviando mensagem
+  if (data != undefined) request.send( data ); //Enviando mensagem
 
   /* Recebando resposta para a mensagem */
 
@@ -41,8 +41,15 @@ const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
   request.onreadystatechange = function () {
     if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
       if ( !responseFunc ){
-        const response = JSON.parse(request.responseText);
-        console.log(response);
+        try{
+          const response = JSON.parse(request.responseText);
+          console.log(response);
+          return response;
+        }
+        catch{
+          console.log(request.responseText);
+          return request.responseText;
+        }
       }
       else responseFunc( request );
     }
@@ -59,7 +66,7 @@ function post( ){
 
   newMen.owner = true;
   newMen.userType = typedd.options[typedd.selectedIndex].value;
-  newMen.user = userId;
+  newMen.user = userId.value;
   //newMen.admim = document.getElementById("adminCode").value;
 
   if( newMen.user == "" || newMen.admin == "" ) return 2;
