@@ -1,28 +1,32 @@
 let session;
 
+function onreadyUserLogin( request ){
+
+    const response = JSON.parse( request.responseText );
+    session = response;
+    setUserInfo();
+}
+
 function connect(){
 
     const userType = typedd.options[typedd.selectedIndex].value;
-    if ( userType == "user" ) { postRequest( "/userLogin", { id: userId.value, type: userType } ); }
-    else if ( userType == "admin" ) postRequest( "/adminLogin", { id: userId.value, type: userType } );
-
-    setUserInfo();
+    if ( userType == "user" ) { postRequest( "/userLogin", { id: userId.value, type: userType }, onreadyUserLogin ); }
+    else if ( userType == "admin" ) postRequest( "/adminLogin", { id: userId.value, type: userType }, onreadyUserLogin );
 }
 
 function setUserInfo( ){
 
-    console.log(session)
+    //console.log(session);
 
-    for ( let i in session ){
+    const props = [ "displayName", "name", "email", "idUser" ];
+    const labelName = [ "DName", "Name", "E-mail", "Id" ];
 
-        console.log("etstetfe")
+    for ( let i in props ){
 
-        /*const label = session[ i ];
-        if ( label != "password" ) document.getElementById( session[ i ] ).innerHTML = label+": "+label[0];
-
-        console.log( label );
-        console.log( label[0] );*/
+        const label = props[ i ];
+        document.getElementById( label ).innerHTML = labelName[i] + ": " + session[label];
 
     }
 
+    document.getElementById( "userInfo" ).style.display = "flex";
 }

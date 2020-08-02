@@ -148,15 +148,7 @@ div.conx{
     display: flex;
     flex-direction: column;
     background-color: rgb(37, 37, 37);
-    padding: 1rem;
-    padding-top: 3.2rem;
-    padding-left: 2rem;
-    width: fit-content;
-    position: absolute;
-    top: 0;
-    border-bottom-right-radius: 0.5rem;
-    color: white;
-    z-index: 4;
+
 
 }
 div.conxIcon{
@@ -203,7 +195,27 @@ div.userInfo{
 
     height: 100%;
     width: fit-content;
-    position: relative;
-    left: -50px;
+    position: absolute;
+    top: 0px;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    padding-right: 1rem;
+    left: 13rem;
+    border-bottom-right-radius: 0.5rem;
+    display: none;
+
+}
+div.conxBox{
+
+    background-color: rgb(37, 37, 37);
+    padding: 1rem;
+    padding-top: 3.2rem;
+    padding-left: 2rem;
+    width: fit-content;
+    position: absolute;
+    top: 0;
+    border-bottom-right-radius: 0.5rem;
+    color: white;
+    z-index: 4;
 
 }
