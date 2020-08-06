@@ -1,24 +1,59 @@
-const express = require( "express" );
-const app = express();
-const bp = require( "body-parser" );
-const config = require( './config.json' );
-const Database = require( "./nodeDB" );
+const express   = require( "express" );
+const app       = express();
+const http      = require( "http" ).Server( app );
+const bp        = require( "body-parser" );
+const config    = require( './config.json' );
+const Database  = require( "./nodeDB" );
+const io        = require( "socket.io" )( http );
 
 
 
 
 /* Criando Web Server */
 
-app.listen( config.serverPort );
+http.listen( config.serverPort, config.serverURL );
 
 function sendPage( path, file ){
-
     app.get(path, function( request, response ){
-
         response.sendFile( __dirname + config.htmlFolder + file );
-
     } );
+}
 
+
+
+
+/* Abrindo WebSocket Server */ 
+
+const cliSockets = { 
+    admin: {},
+    user: {}
+};
+
+io.on( "connect", ( socket ) => { 
+    socket.on( "setSoc", message => {
+        cliSockets[ message.type ][ message.id ] = socket;
+        //console.log( cliSockets )
+    } )
+} );
+
+function notifyClient( message ){
+    let destineType = "admin";
+    if ( message.userType == "admin" ) destineType = "user";
+    let destineId = undefined;
+    for ( let i in Database.sessions.actvChats ){
+        if ( Database.sessions.actvChats[ i ][ message.userType ] == message.user ){
+            destineId = Database.sessions.actvChats[ i ][ destineType ];
+            break;
+        }
+    }
+
+    const destineSocket = cliSockets[ destineType ][ destineId ];
+    //console.log( cliSockets );
+    if ( destineSocket != undefined ){
+        io.to(destineSocket.id).emit( 'newMen', message );
+        //console.log( destineSocket.id );
+    }
+    else console.log( cliSockets );
 }
 
 
@@ -35,7 +70,6 @@ app.use( express.static( 'public' ) ); //Libera a pasta public para ser disponib
 
 /* Abrindo conexão com BD */
 const sql = require( "mysql" );
-const { User } = require("./nodeDB");
 const conn = sql.createConnection( config.sqlConfig );
 conn.connect( function( error ){
     if ( error ) throw error;
@@ -45,7 +79,7 @@ conn.connect( function( error ){
 
 
 
-/* Ouvindo post requests */
+/* Ouvindo POST requests */
 
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true}));
@@ -68,7 +102,9 @@ app.post( "/chatPost", function( request, response ){
 
     // Colocando no Banco de Dados
 
-    
+    // Enviando para o destino
+
+    notifyClient( message );
 
 } );
 
@@ -78,13 +114,14 @@ app.post( "/userLogin", async ( request, response ) => {
 
     function reply( user ){
         response.json( user );
+        Database.chatConnect();
     }
-    function end(){
-        response.end( "Deu erro aqui, amigão" );
+    function end(error){
+        console.log( error )
+        response.end( "Erro" );
     }
-
+    
     new Database.User( conn, request.body.id ).then( reply ).catch( end );
-
 } );
 
 // De admins logando
@@ -93,11 +130,19 @@ app.post( "/adminLogin", function( request, response ){
 
     function reply( admin ){
         response.json( admin );
+        Database.chatConnect();
     }
-    function end(){
-        response.end( "Deu erro aqui, amigão" );
+    function end( error ){
+        console.log( error );
+        response.end( "Erro" );
     }
 
     new Database.Admin( conn, request.body.id ).then( reply ).catch( end );
-
 } );
+
+// Logout
+
+app.post( "/logout", ( request, response ) => {
+    Database.logout( request.body );
+    response.end( );
+} )

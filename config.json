@@ -4,14 +4,16 @@
     "defaultPage": "index.html",
     "testPage": "teste.html",
     "serverPort": 3305,
+    "serverURL": "chattest",
+    "WSport": 3306,
     
     "sqlConfig": {
 
-        "port": "3308",
+        "port": "3309",
         "database": "chat",
         "host": "localhost",
-        "user": "node",
-        "password": "node"
+        "user": "root",
+        "password": ""
 
     },
 

@@ -23,6 +23,9 @@ class Men{
 
         chat.innerHTML += " <div class='message " + owner + " ' id=' msg" + mens.length + " '> " + this.text + " </div>"
 
+        setInterval(()=>{
+            document.querySelector("#chat").scrollTop=10000;
+        }, 500);
     }
 
 }

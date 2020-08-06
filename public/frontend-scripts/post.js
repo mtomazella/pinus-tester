@@ -16,13 +16,6 @@ const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
   const data = JSON.stringify( dataObj );
   const request =  new XMLHttpRequest();
 
-  request.onerror = ( url, dataObj, callback = undefined ) => {
-
-    console.log( "reenviando mensagem: " + newMen );
-    postRequest( url, dataObj );
-
-  }
-
   request.open( 'POST', url, true);
   request.setRequestHeader( "Content-type", "application/json" );
   if (data != undefined) request.send( data ); //Enviando mensagem
@@ -36,7 +29,6 @@ const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
     }
   }
   else request.onerror = errorFunc(request);
-
 
   request.onreadystatechange = function () {
     if(request.readyState === XMLHttpRequest.DONE && request.status === 200) {
@@ -82,13 +74,12 @@ function post( ){
 
   newMen.show();  
 
-
   /* Data Transfer */
 
   postRequest( "/chatPost", newMen, function( request ){
 
     const response = JSON.parse(request.responseText);
-    console.log(response);
+    //console.log(response);
     newMen.datetime = response.date;
 
   }, undefined ); 

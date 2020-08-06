@@ -33,11 +33,11 @@
                 <button class="conxBtn cod" onclick="connect()">Conectar</button>
             </div>
 
-            <div class=" userInfo conx " id="userInfo">
-                <label class="userInfo" id="displayName">DName: </label>
-                <label class="userInfo" id="name">Name: </label>
-                <label class="userInfo" id="email">E-mail: </label>
-                <label class="userInfo" id="idUser">Id: </label>
+            <div class=" userInfo conx " id="userInfo" style="display: none;">
+                <label class="userInfo" id="displayName">   </label>
+                <label class="userInfo" id="name">          </label>
+                <label class="userInfo" id="email">         </label>
+                <label class="userInfo" id="id">        </label>
             </div>
 
         </div>
@@ -77,6 +77,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <!-- Bootstrap Js -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+        <!-- Socket.IO -->
+        <script src="/socket.io/socket.io.js"></script>
 
         <!-- ChatScript -->
         <script src="../frontend-scripts/htmlComp.js">  </script>
@@ -84,6 +86,7 @@
         <script src="../frontend-scripts/post.js">      </script>
         <script src="../frontend-scripts/UI.js">        </script>
         <script src="../frontend-scripts/connect.js">   </script>
+        <script src="../frontend-scripts/chat.js">      </script>
 
     </body
 >

@@ -143,14 +143,6 @@ button.minChat{
 }
 
 
-div.conx{
-
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(37, 37, 37);
-
-
-}
 div.conxIcon{
 
     position: absolute;
@@ -194,7 +186,7 @@ button.conxBtn{
 div.userInfo{
 
     height: 100%;
-    width: fit-content;
+    width: max-content;
     position: absolute;
     top: 0px;
     padding-top: 2rem;
@@ -202,7 +194,13 @@ div.userInfo{
     padding-right: 1rem;
     left: 13rem;
     border-bottom-right-radius: 0.5rem;
-    display: none;
+
+}
+div.conx{
+
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(37, 37, 37);
 
 }
 div.conxBox{
@@ -213,7 +211,6 @@ div.conxBox{
     padding-left: 2rem;
     width: fit-content;
     position: absolute;
-    top: 0;
     border-bottom-right-radius: 0.5rem;
     color: white;
     z-index: 4;
