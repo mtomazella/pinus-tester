@@ -53,15 +53,14 @@ const postRequest = ( url, dataObj, responseFunc, errorFunc ) => {
 function post( ){
 
   const newMen = new Men();
-  mens.push( newMen );
-  const id = mens.length;
+  //mens.push( newMen );
+  //const id = mens.length;
 
   newMen.owner = true;
   newMen.userType = typedd.options[typedd.selectedIndex].value;
   newMen.user = userId.value;
-  //newMen.admim = document.getElementById("adminCode").value;
 
-  if( newMen.user == "" || newMen.admin == "" ) return 2;
+  if( newMen.user == "" || destinationId == undefined ) return 2;
 
   if ( !input.value.trim() ){
     input.value = "";
@@ -69,8 +68,8 @@ function post( ){
   } 
 
   newMen.setText( input.value );
+  newMen.destination = destinationId;
   input.value = "";
-  //newMen.posting = true;
 
   newMen.show();  
 

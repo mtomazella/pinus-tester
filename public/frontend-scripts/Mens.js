@@ -18,6 +18,7 @@ class Men{
 
     show( ){
 
+        mens.push( this );
         let owner = "";
         if ( this.owner ) owner = "owner";
 

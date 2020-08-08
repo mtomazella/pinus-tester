@@ -3,8 +3,8 @@ const bp = require( "body-parser" );
 app.use(bp.json());
 app.use(bp.urlencoded({ extended: true}));
 const sessions = {
-    "user": [],
-    "admin": [],
+    "user": {},
+    "admin": {},
     "freeuser": [],
     "freeadmin": [],
     "actvChats": []
@@ -24,13 +24,9 @@ async function query( connection, table, id, resolve, reject ){
         }
         user.type = table;
 
-        let loged = false;
-        for ( let j in sessions[table] ){
-            if ( sessions[table][j].id == id ) loged = true;
-        }
         //console.log(user);
-        if ( !loged && user.id != undefined ){
-            sessions[ table ].push( user );
+        if ( sessions[table][ id ] == undefined && user.id != undefined ){
+            sessions[ table ][ id ] = user;
             sessions[ "free" + table ].push( id );
         }
         //console.log( sessions );
@@ -62,18 +58,15 @@ function chatConnect( ){
             const chat = { user: sessions.freeuser.shift(), admin: sessions.freeadmin.shift() };
             sessions.actvChats.push( chat );
             //console.log( sessions );
+            initializeChat( chat );
             resolve ( chat );
         }
     } );
 }
 
 function logout( user ){
-    for ( let i in sessions[ user.type ] ){
-        if ( sessions[ user.type ][i].id == user.id ){
-            sessions[user.type][i] = undefined;
-            break;
-        }
-    }
+    sessions[user.type][ user.id ] = undefined;
+
     for( let i in sessions[ "free" + user.type ] ){
         if ( sessions[ "free" + user.type ][i].id == user.id ){
             sessions[ "free" + user.type ][i] = undefined;
@@ -89,7 +82,40 @@ function logout( user ){
     //console.log( sessions )
 }
 
-module.exports = { 
+function initializeChat( chat ){
+
+    function queryMessages( chat ){
+        return new Promise( ( resolve, reject ) => {
+            const { connection } = require( "./nodeApp" );
+            connection.query( " SELECT * FROM CHAT WHERE idUser =  " + chat.user + " AND idAdmin =  " + chat.admin + " ORDER BY datetime;", ( error, Qresult ) => {
+                if ( error ) reject( error );
+        
+                const messages = [];
+
+                for ( let i in Qresult ){
+                    const newMessage = {};
+                    for ( let j in Qresult[ i ] ){
+                        newMessage[ j ] = Qresult[ i ][ j ];
+                    }
+                    messages.push( newMessage );
+                }
+                //console.log( messages );
+
+                resolve( messages );
+            } );
+        } );
+    }
+
+    const { sendInitMessages } = require( "./nodeApp" );
+
+    queryMessages( chat ).then( messages => {
+        sendInitMessages( messages, chat );
+    } ).catch( error => {
+        throw error;
+    } )
+}
+
+module.exports = {
     User: User, 
     Admin: Admin, 
     chatConnect: chatConnect, 

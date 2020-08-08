@@ -7,8 +7,6 @@ const Database  = require( "./nodeDB" );
 const io        = require( "socket.io" )( http );
 
 
-
-
 /* Criando Web Server */
 
 http.listen( config.serverPort, config.serverURL );
@@ -33,21 +31,19 @@ io.on( "connect", ( socket ) => {
     socket.on( "setSoc", message => {
         cliSockets[ message.type ][ message.id ] = socket;
         //console.log( cliSockets )
-    } )
+    } );
 } );
 
-function notifyClient( message ){
-    let destineType = "admin";
-    if ( message.userType == "admin" ) destineType = "user";
-    let destineId = undefined;
-    for ( let i in Database.sessions.actvChats ){
-        if ( Database.sessions.actvChats[ i ][ message.userType ] == message.user ){
-            destineId = Database.sessions.actvChats[ i ][ destineType ];
-            break;
-        }
-    }
+function getDestineType( userType ){
+    //console.log( userType )
+    if ( userType == "admin" ) return "user"
+    else return "admin";
+}
 
-    const destineSocket = cliSockets[ destineType ][ destineId ];
+function notifyClient( message ){
+    const destineType = getDestineType( message.userType );
+
+    const destineSocket = cliSockets[ destineType ][ /*destineId*/ message.destination ];
     //console.log( cliSockets );
     if ( destineSocket != undefined ){
         io.to(destineSocket.id).emit( 'newMen', message );
@@ -56,7 +52,11 @@ function notifyClient( message ){
     else console.log( cliSockets );
 }
 
-
+function sendInitMessages( messages, chat ){
+    //console.log( messages );
+    io.to( cliSockets.user[ chat.user ].id ).emit( 'oldMessages', messages );
+    io.to( cliSockets.admin[ chat.admin ].id ).emit( 'oldMessages', messages );
+}
 
 
 /* Definindo páginas */
@@ -94,13 +94,38 @@ app.post( "/chatPost", function( request, response ){
 
     // Respondendo 
 
-    const datetime = new Date().toLocaleDateString( "en-US", config.dateOpt );
-    response.json( { Feeback: "got it, bb", Message_received: message, date: datetime } );
+    let datetime = new Date().toISOString()
+
+    datetime = datetime.slice(0, 19).replace('T', ' ');
+
+    response.json( { Message_received: message, date: datetime } );
     message.datetime = datetime;
 
-    console.log( message );
+    //console.log( message );
 
     // Colocando no Banco de Dados
+
+    function commitMessage( message, datetime ){
+        let admin, user;
+        if ( message.userType == 'user' ){
+            admin = message.destination;
+            user = message.user;
+        }
+        else{
+            admin = message.user;
+            user = message.destination
+        }
+        conn.query( ` INSERT INTO chat VALUES ( ${admin}, ${user}, '${datetime}', '${message.userType}', 'text', '${message.text}', null ) `, error => {
+            if ( error ){ 
+                console.log( error );
+                commitMessage( message, datetime );
+            }
+        } )
+    }
+
+    //console.log( datetime );
+
+    commitMessage( message, datetime )
 
     // Enviando para o destino
 
@@ -146,3 +171,10 @@ app.post( "/logout", ( request, response ) => {
     Database.logout( request.body );
     response.end( );
 } )
+
+module.exports = { 
+    cliSockets: cliSockets, 
+    http: http,
+    connection: conn,
+    sendInitMessages: sendInitMessages
+};
