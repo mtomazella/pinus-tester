@@ -100,6 +100,12 @@ i.send{
 
 }
 
+.minChats{
+    position: absolute;
+    bottom: 0;
+    margin-left: 1rem;
+    display: flex;
+}
 .minChat{
 
     background-color: rgb(37, 37, 37);
@@ -112,13 +118,9 @@ i.send{
 }
 div.minChat{
 
-    position: absolute;
-    bottom: 0;
     width: 15rem;
-    margin-left: 1rem;
     padding-top: 0.4rem;
-    margin-bottom: 0;
-
+    
 }
 button.minChat{
 

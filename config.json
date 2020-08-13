@@ -1,11 +1,8 @@
 {
     
     "htmlFolder": "/public/src/",
-    "defaultPage": "index.html",
-    "testPage": "teste.html",
     "serverPort": 3305,
     "serverURL": "chattest",
-    "WSport": 3306,
     
     "sqlConfig": {
 
@@ -15,17 +12,6 @@
         "user": "root",
         "password": ""
 
-    },
-
-    "dateOpt": {
-
-        "year":     "numeric",
-        "month":    "2-digit",
-        "day":      "2-digit",
-        "hour":     "2-digit",  
-        "minute":   "2-digit",
-        "second":   "2-digit"
-        
     }
 
 }
