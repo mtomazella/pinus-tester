@@ -23,7 +23,7 @@ function teste ( quant ){
         mens[i].show()
     }
 }
-teste( 20 )
+//teste( 20 )
 
 
 /*
