@@ -32,6 +32,20 @@ body{
 
 }
 
+div.titleBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 1rem;
+}
+
+label.chatInfo{
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: white;
+    align-self: flex-start;
+}
+
 .chat{
 
     height: 82%;

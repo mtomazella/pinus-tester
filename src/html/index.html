@@ -25,13 +25,14 @@
         <div class=" conxBox " id="conx">
 
             <div class="conx">
-                <input type="text" id="userCode" class="cod" value="1" placeholder="Código">
+                <input type="text" id="userCode" class="cod" value="16" placeholder="Código">
                 <select name="chatType" class="cod" id="chatType">
                     <option value="user" selected>User</option>
                     <option value="admin">Admin</option>
                 </select>
-                <input type="text" id="desCode" class="cod" value="1" placeholder="Código Destino">
+                <input type="text" id="desCode" class="cod" value="5" placeholder="Código Destino">
                 <button class="conxBtn cod" onclick="connect()">Conectar</button>
+                <button class="conxBtn cod" onclick="chatConnect()" style="margin-top: 0.5rem;">Chat</button>
             </div>
 
             <div class=" userInfo conx " id="userInfo" style="display: none;">
@@ -44,12 +45,15 @@
         </div>
 
         <div class="bordinha" id="maxChat">
-            <div class="botoes">
+            <div class="titleBar">
+                <label class="chatInfo" id="chatInfo">1 - undefined</label>
+                <div class="botoes">
 
-                <i class="fa fa-window-minimize icon" aria-hidden="true" onclick=" hide() "></i>
-                <i class="fas fa-window-maximize icon"></i>
-                <i class="fa fa-times icon" aria-hidden="true"></i>
+                    <i class="fa fa-window-minimize icon" aria-hidden="true" onclick=" hide() "></i>
+                    <i class="fas fa-window-maximize icon"></i>
+                    <i class="fa fa-times icon" aria-hidden="true"></i>
 
+                </div>
             </div>
             <div class="col-12 chat" id="chat"></div> 
             <div class="col-12 write">
@@ -78,16 +82,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <!-- Bootstrap Js -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
-        <!-- Socket.IO -->
-        <script src="/socket.io/socket.io.js"></script>
 
         <!-- ChatScript -->
+        <script src="../frontend-scripts/requests.js">  </script>
         <script src="../frontend-scripts/htmlComp.js">  </script>
         <script src="../frontend-scripts/Mens.js">      </script>
-        <script src="../frontend-scripts/insert.js">      </script>
         <script src="../frontend-scripts/UI.js">        </script>
         <script src="../frontend-scripts/connect.js">   </script>
-        <script src="../frontend-scripts/chat.js">      </script>
+        <script src="../frontend-scripts/post.js">      </script>
 
     </body
 >

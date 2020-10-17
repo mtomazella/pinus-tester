@@ -8,22 +8,15 @@ class Men {
         this.type       = type;
         this.text       = text;
         this.image      = image;  
+        allMessages.unshift( this );
         return this;
     }
     show ( ){
-        const owner = 'owner';
+        const owner = ( this.sender == session.userType ) ? 'owner' : '';
         chat.innerHTML += `<div class="message ${owner}">${this.text}</div>`;
+        document.querySelector( "#chat" ).scrollTop = 10000;
     }
 }
-
-function teste ( quant ){
-    const mens = [ ];
-    for ( let i = 0; i < quant; i++ ){
-        mens.push( new Men() );
-        mens[i].show()
-    }
-}
-//teste( 20 )
 
 
 /*
