@@ -1,13 +1,13 @@
 class Men {
-    constructor ( id, idAdmin, idUser, datetime, sender, type, text, image ){
-        this.id         = id;
-        this.idAdmin    = idAdmin;
-        this.idUser     = idUser;
-        this.datetime   = datetime;
-        this.sender     = sender;
-        this.type       = type;
-        this.text       = text;
-        this.image      = image;  
+    constructor ( message ){
+        this.id         = message.id;
+        this.idAdmin    = message.idAdmin;
+        this.idUser     = message.idUser;
+        this.datetime   = message.datetime;
+        this.sender     = message.sender;
+        this.type       = message.type;
+        this.text       = message.text;
+        this.image      = message.image;  
         return this;
     }
     show ( ){

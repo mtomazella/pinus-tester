@@ -30,12 +30,10 @@
                     <option value="user" selected>User</option>
                     <option value="admin">Admin</option>
                 </select>
-                <input type="text" id="desCode" class="cod" value="1" placeholder="Código Destino">
                 <button class="conxBtn cod" onclick="connect()">Conectar</button>
             </div>
 
             <div class=" userInfo conx " id="userInfo" style="display: none;">
-                <label class="userInfo" id="displayName">   </label>
                 <label class="userInfo" id="name">          </label>
                 <label class="userInfo" id="email">         </label>
                 <label class="userInfo" id="id">            </label>
@@ -79,16 +77,15 @@
         <!-- Bootstrap Js -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
         <!-- Socket.IO -->
-        <script src="/socket.io/socket.io.js"></script>
+        <script src="../libraries/socket.io/socket.io.js"></script>
 
         <!-- ChatScript -->
-        <script src="../frontend-scripts/htmlComp.js">  </script>
-        <script src="../frontend-scripts/Mens.js">      </script>
-        <script src="../frontend-scripts/insert.js">      </script>
-        <script src="../frontend-scripts/UI.js">        </script>
-        <script src="../frontend-scripts/connect.js">   </script>
-        <script src="../frontend-scripts/chat.js">      </script>
-
+        <script src="../frontend-scripts/RealTime.js">       </script>
+        <script src="../frontend-scripts/htmlComp.js">       </script>
+        <script src="../frontend-scripts/Mens.js">           </script>
+        <script src="../frontend-scripts/UI.js">             </script>
+        <script src="../frontend-scripts/connect.js">        </script>
+        <script src="../frontend-scripts/chat.js">           </script>
     </body
 >
 </html>
