@@ -6,6 +6,7 @@ body{
     height: 100vh;
     overflow: hidden;
     z-index: 2;
+    display: flex;
 
 }
 
@@ -17,19 +18,36 @@ body{
 
 }
 
-.bordinha{
+section.content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+    align-self: center;
+    justify-content: center;
+}
 
-    position: relative;
-    width: 40rem;
+div.debug {
+    display: none;
+    flex-direction: column;
+    width: 10rem;
+    height: fit-content;
+    padding: 1rem;
+    margin-right: 2rem;
+    background-image: url("../images/chat texture.jpg");
+    background-position: center;
+    background-size: cover;
+    border-radius: 0.4rem;
+}
+
+div.bordinha{
+    width: 45rem;
     height: 70vh;
-    margin: auto;
-    top: 8vh;
     background-image: url("../images/chat texture.jpg");
     padding: 1rem;
     padding-top: 0.2rem;
     border-radius: 0.4rem;
     text-align: end;
-
 }
 
 .chat{

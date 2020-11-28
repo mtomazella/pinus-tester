@@ -1,6 +1,6 @@
 class Men {
     constructor ( message ){
-        this.id         = message.id;
+        //this.id         = message.id;
         this.idAdmin    = message.idAdmin;
         this.idUser     = message.idUser;
         this.datetime   = message.datetime;
@@ -11,8 +11,19 @@ class Men {
         return this;
     }
     show ( ){
-        const owner = 'owner';
+        let owner = 'owner';
+        if ( realTime.user.type ) owner = ( realTime.user.type == this.sender ) ? 'owner' : '';
         chat.innerHTML += `<div class="message ${owner}">${this.text}</div>`;
+    }
+    extractInfo ( ) {
+        return {    idAdmin: this.idAdmin,
+                    idUser: this.idUser,
+                    datetime: this.datetime,
+                    sender: this.sender,
+                    type: this.type,
+                    text: this.text,
+                    image: this.image
+                }
     }
 }
 

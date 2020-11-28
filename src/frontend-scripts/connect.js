@@ -6,6 +6,7 @@ function connect ( ) {
             return;
         }
         session = user[0];
+        if ( userType === 'admin' ) debug.style.display = 'flex';
         setUserInfo( );
         realTime.start( APIurl, userType );
         realTime.supportRequest();

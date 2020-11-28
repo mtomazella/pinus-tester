@@ -41,27 +41,29 @@
 
         </div>
 
-        <div class="bordinha" id="maxChat">
-            <div class="botoes">
-
-                <i class="fa fa-window-minimize icon" aria-hidden="true" onclick=" hide() "></i>
-                <i class="fas fa-window-maximize icon"></i>
-                <i class="fa fa-times icon" aria-hidden="true"></i>
-
+        <section class="content">
+            <div class="debug" id="debugDiv">
+                <select class="cod" id="debug_userId" style="width: auto;"></select>
+                <button class="cod" onclick="debug_supportConnect()">Conectar</button>
+                <button class="cod" onclick="debug_supportDisconnect()">Desconectar</button>
             </div>
-            <div class="col-12 chat" id="chat"></div> 
-            <div class="col-12 write">
-
-                <form class="write row" autocomplete="off">
-
-                    <input autocomplete="false" name="hidden" type="text" style="display:none;">
-                    <input type="text" class="write badge-pill px-3" autocapitalize="on" autocomplete="off" name="input" id="input">
-                    <button type="button" class="send rounded rounded-circle" name="send" onclick="post()"> <i class="fa fa-location-arrow icon send" aria-hidden="true"></i> </button>
-
-                </form>
-
+    
+            <div class="bordinha" id="maxChat"">
+                <div class="botoes">
+                    <i class="fa fa-window-minimize icon" aria-hidden="true" onclick=" hide() "></i>
+                    <i class="fas fa-window-maximize icon"></i>
+                    <i class="fa fa-times icon" aria-hidden="true"></i>
+                </div>
+                <div class="col-12 chat" id="chat"></div> 
+                <div class="col-12 write">
+                    <form class="write row" autocomplete="off">
+                        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+                        <input type="text" class="write badge-pill px-3" autocapitalize="on" autocomplete="off" name="input" id="input">
+                        <button type="button" class="send rounded rounded-circle" name="send" onclick="post()"> <i class="fa fa-location-arrow icon send" aria-hidden="true"></i> </button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </section>
 
         <div class="minChat" id="minChat" onclick=" show() ">
             <i class="fa fa-location-arrow minIcon" aria-hidden="true"></i> 
@@ -86,6 +88,7 @@
         <script src="../frontend-scripts/UI.js">             </script>
         <script src="../frontend-scripts/connect.js">        </script>
         <script src="../frontend-scripts/chat.js">           </script>
+        <script src="../frontend-scripts/debug.js">          </script>
     </body
 >
 </html>

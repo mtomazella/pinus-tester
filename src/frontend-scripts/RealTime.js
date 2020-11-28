@@ -1,6 +1,8 @@
 class RealTime {
     socket;
-    user;
+    user = { };
+    otherUserInfo = { socketId: '' };
+    supportQueueObj = { };
 
     constructor ( ) {
         return this;
@@ -17,13 +19,15 @@ class RealTime {
         socket.emit( 'setSocket', { type: userType, id: userId.value } )
 
         socket.on( 'message', ( message ) => {
-            new Men( message ).show();
+            const newMessage = new Men( message );
+            newMessage.show();
         } )
-        socket.on( 'supportConnect', ( info ) => {
-            console.log( info )
+        socket.on( 'repportError', ( error ) => {
+            console.log( error );
         } )
         socket.on( 'supportDisconnect', ( info ) => {
-            console.log( info )
+            if ( info.otherUserInfo.socketId === this.otherUserInfo.socketId ) this.otherUserInfo = { };
+            chat.innerHTML = '';
         } )
         
         if ( userType == 'admin' ){
@@ -31,7 +35,19 @@ class RealTime {
                 console.log( request );
             } )
             socket.on( 'supportQueue', ( queue ) => {
-                console.log( queue );
+                $("debug_userId").empty();
+                queue.forEach( element => {
+                    this.supportQueueObj[ element.userId ] = element;
+                    const option = document.createElement( 'option' );
+                    option.text = element.userId;
+                    option.value = element.socketId;
+                    supportQueueSelector.add( option );
+                });
+            } )
+        } else {
+            socket.on( 'supportConnect', ( info ) => {
+                console.log( info )
+                if ( info.user.socketId == this.socket.id ) this.otherUserInfo = { socketId: info.support.socketId, userId: info.support.supportId };
             } )
         }
 
@@ -44,5 +60,23 @@ class RealTime {
 
     supportQueue ( ) {
         if ( this.user.type == 'admin' ) this.socket.emit( 'supportQueue' )
+    }
+
+    supportConnect ( userInfo ) {
+        this.otherUserInfo = userInfo;
+        if ( this.user.type == 'admin' ) this.socket.emit( 'supportConnect', userInfo )
+    }
+
+    supportDisconnect ( ) {
+        console.log( this.otherUserInfo )
+        this.socket.emit( 'supportDisconnect', { otherUserInfo: this.otherUserInfo, userInfo: { userId: this.user.id, socketId: this.socket.id } } )
+        console.log( { otherUserInfo: this.otherUserInfo, userInfo: this.user } )
+        this.otherUserInfo = { };
+        chat.innerHTML = '';
+    }
+
+    message ( message ) {
+        const messageObj = message.extractInfo();
+        this.socket.emit( 'message', { message: messageObj, otherSocketId: this.otherUserInfo.socketId } );
     }
 }
