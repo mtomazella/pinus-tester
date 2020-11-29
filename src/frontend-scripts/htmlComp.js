@@ -8,8 +8,8 @@ const typedd                = document.getElementById( "chatType" );
 const supportQueueSelector  = document.getElementById( "debug_userId" );
 const debug                 = document.getElementById( "debugDiv" )
 
-const APIurl = 'http://pinus-api.herokuapp.com';
-//const APIurl = 'http://localhost:3305';
+//const APIurl = 'http://pinus-api.herokuapp.com';
+const APIurl = 'http://localhost:3305';
 let session;
 
 const realTime = new RealTime( );

@@ -22,6 +22,12 @@ class RealTime {
             const newMessage = new Men( message );
             newMessage.show();
         } )
+        socket.on( 'messageLoad', ( messages ) => {
+            messages.forEach( ( message ) => {
+                const newMessage = new Men( message );
+                newMessage.show();
+            } )
+        } )
         socket.on( 'repportError', ( error ) => {
             console.log( error );
         } )
