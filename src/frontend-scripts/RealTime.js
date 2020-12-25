@@ -14,9 +14,9 @@ class RealTime {
 
     start ( url = 'http://localhost:3305', userType ) {
         const socket    = io( url );
-        this.user       = { id: userId.value, type: userType }
+        this.user       = { id: session.id, type: session.type }
 
-        socket.emit( 'setSocket', { type: userType, id: userId.value } )
+        socket.emit( 'setSocket', { type: session.type, id: session.id } )
 
         socket.on( 'message', ( message ) => {
             const newMessage = new Men( message );
@@ -41,7 +41,9 @@ class RealTime {
                 console.log( request );
             } )
             socket.on( 'supportQueue', ( queue ) => {
-                $("debug_userId").empty();
+                for ( let i in typedd.options.length-1 ) {
+                    typedd.remove( i );
+                }
                 queue.forEach( element => {
                     this.supportQueueObj[ element.userId ] = element;
                     const option = document.createElement( 'option' );

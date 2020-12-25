@@ -1,36 +1,26 @@
 function connect ( ) {
     const userType = typedd.options[typedd.selectedIndex].value;
-    GETrequest( APIurl, userType, `id=${userId.value}`, ( user ) => {
-        if ( !user[0] ) {
-            alert( 'Usuário não existe' );
-            return;
+    $.ajax({
+        type: "POST",
+        url: `${APIurl}/login`,
+        data: {
+            email: userEmail.value,
+            password: userPass.value,
+            type: userType
+        },
+        success: function (response) {
+            session = response.user;
+            session.token = response.token;
+            if ( userType === 'admin' ) debug.style.display = 'flex';
+            setUserInfo( );
+            realTime.start( APIurl, userType );
+            //realTime.supportRequest();
+            realTime.supportQueue();
         }
-        session = user[0];
-        if ( userType === 'admin' ) debug.style.display = 'flex';
-        setUserInfo( );
-        realTime.start( APIurl, userType );
-        realTime.supportRequest();
-    } )
+    });
 }
 
 /* Functions */
-
-function GETrequest ( url, route, query = '', funcComp, funcErr ) {
-    const request = new XMLHttpRequest();
-    if ( query != '' ) query = '?'+query;
-    console.log( `${url}/${route}${query}` )
-    request.open( 'GET', `${url}/${route}${query}`, true );
-    request.send( null );
-    
-    request.onreadystatechange = ( ) => {
-        if (request.readyState == 4 && request.status == 200)
-            funcComp( JSON.parse( request.responseText ) );
-    } 
-
-    request.onerror = ( ) => {
-        console.log( JSON.parse( request.responseText ) )
-    }
-}
 
 function setUserInfo( ) {
 

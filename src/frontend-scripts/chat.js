@@ -6,7 +6,7 @@ $(document).ready( ( ) => {
 
 function post( ) {
     const idAdmin = ( realTime.user.type === 'admin' ) ? realTime.user.id : realTime.otherUserInfo.userId;
-    const idUser  = ( realTime.user.type === 'user' )  ? realTime.otherUserInfo.userId : realTime.user.id;
+    const idUser  = ( realTime.user.type === 'admin' ) ? realTime.otherUserInfo.userId : realTime.user.id;
     const message = new Men( { 
         idAdmin: idAdmin, 
         idUser: idUser, 
@@ -16,6 +16,7 @@ function post( ) {
         text: input.value, 
         image: undefined
     } )
+    console.log(message)
     input.value = '';
     if ( message.type === 'text' && ( message.text.trim() === '' || message.text === undefined ) ) return;
     message.show();
